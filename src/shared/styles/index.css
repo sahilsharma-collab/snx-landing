@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* Design tokens. These mirror src/shared/theme/tokens.ts one-to-one — that
+   file is the TS-side source, this @theme is what Tailwind turns into the
+   `bg-ink`, `text-cta`, `font-display`… utilities. Keep the two in sync. */
+@theme {
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --color-ink: #080C1C;        /* dark bands: deep navy */
+  --color-ink-2: #10172F;      /* cards on dark */
+  --color-ink-3: #1A2344;
+  --color-cream: #F5F7FF;      /* headline white on dark */
+  --color-paper: #F6F5F1;      /* light bands */
+  --color-card: #FFFFFF;
+  --color-line: #E6E3DC;
+  --color-body: #4A4F63;       /* body copy on light */
+  --color-mist: #A3AAC4;       /* body copy on dark */
+  --color-brand: #7B61FF;      /* violet */
+  --color-brand-2: #4C8DFF;    /* blue */
+  --color-mint: #7BE0C3;
+  --color-pink: #FF7BB0;
+  --color-cta: #C9F45B;        /* the one CTA colour, every page */
+  --color-cta-hover: #B8E746;
+  --color-save: #1F9D55;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; background: var(--color-ink); }
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+  }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  :focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+}
+
+@layer components {
+  .shell { @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.18em]; }
+  .h-display { @apply text-[2.7rem] leading-[1.02] font-extrabold tracking-[-0.03em] sm:text-6xl lg:text-[4.9rem]; }
+  .h-section { @apply text-3xl leading-[1.06] font-bold tracking-[-0.025em] sm:text-5xl; }
+
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-semibold transition-all duration-300 whitespace-nowrap; }
+  .btn-cta { @apply bg-cta text-ink hover:bg-cta-hover hover:-translate-y-0.5 shadow-[0_10px_34px_-8px_rgba(201,244,91,0.65)]; }
+  .btn-ghost-dark { @apply text-white ring-1 ring-white/20 hover:ring-white/50 hover:bg-white/5; }
+  .btn-ghost { @apply text-ink ring-1 ring-ink/15 hover:ring-ink/40 bg-white; }
+
+  .glow {
+    background:
+      radial-gradient(60% 50% at 72% 22%, rgba(123, 97, 255, 0.38), transparent 70%),
+      radial-gradient(40% 40% at 12% 82%, rgba(76, 141, 255, 0.25), transparent 70%),
+      radial-gradient(30% 30% at 90% 85%, rgba(201, 244, 91, 0.10), transparent 70%);
+  }
+  .grid-dots {
+    background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .text-gradient {
+    background: linear-gradient(95deg, #C9F45B 0%, #7BE0C3 40%, #9C8BFF 80%, #C9F45B 100%);
+    background-size: 220% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: shimmer-text 5s linear infinite;
+  }
+  /* Nuvo's aurora: lime + violet mesh drifting over navy */
+  .aurora { position: relative; background: #080C1C; overflow: hidden; }
+  .aurora::before {
+    content: ''; position: absolute; inset: -30%; pointer-events: none;
+    background:
+      radial-gradient(30% 35% at 25% 30%, rgba(123,97,255,0.45), transparent 70%),
+      radial-gradient(25% 30% at 75% 60%, rgba(201,244,91,0.18), transparent 70%),
+      radial-gradient(30% 30% at 60% 15%, rgba(76,141,255,0.35), transparent 70%);
+    filter: blur(30px); animation: aurora 18s ease-in-out infinite alternate;
+  }
+  .card-glass { @apply ring-1 ring-white/10; background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02)); backdrop-filter: blur(14px); }
+  /* cursor spotlight: <Spotlight> sets --mx / --my */
+  .spot { position: relative; isolation: isolate; }
+  .spot::before {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: -1; opacity: 0; transition: opacity .4s;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), var(--spot, rgba(201,244,91,0.13)), transparent 60%);
+  }
+  .spot:hover::before { opacity: 1; }
+}
+
+/* ---------- Realistic phone (geometry lives in Phone.tsx) -------------- */
+.iphone { transform-style: preserve-3d; }
+.iphone-screen { isolation: isolate; }
+.iphone-glare {
+  position: absolute; inset: 0; z-index: 60; pointer-events: none; border-radius: inherit;
+  background:
+    radial-gradient(120% 60% at var(--gx, 20%) var(--gy, 0%), rgba(255,255,255,0.18), transparent 55%),
+    linear-gradient(118deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.03) 28%, transparent 30%);
+  mix-blend-mode: screen;
+}
+
+/* ---------- Motion ----------------------------------------------------- */
+@keyframes float { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-12px) } }
+@keyframes toast-in { 0% { opacity: 0; transform: translateY(-14px) scale(.96) } 12%,88% { opacity: 1; transform: none } 100% { opacity: 0; transform: translateY(-8px) } }
+@keyframes marquee { to { transform: translateX(-50%) } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: none } }
+@keyframes ring { from { stroke-dashoffset: var(--ring-full) } }
+@keyframes shimmer-text { to { background-position: -220% 0 } }
+@keyframes aurora { 0% { transform: translate(0,0) rotate(0) } 100% { transform: translate(6%,-4%) rotate(14deg) } }
+@keyframes caret { 50% { opacity: 0 } }
+@keyframes phone-in { from { opacity: 0; transform: translateY(120px) rotateX(18deg) scale(.92) } to { opacity: 1; transform: none } }
+@keyframes notif-in { from { opacity: 0; transform: translateY(-18px) scale(.94) } to { opacity: 1; transform: none } }
+@keyframes pulse-glow { 0%,100% { opacity: .55; transform: scale(1) } 50% { opacity: .9; transform: scale(1.08) } }
+@keyframes spin-slow { to { transform: rotate(360deg) } }
+@keyframes word-in { from { opacity: 0; transform: translateY(0.45em); filter: blur(8px) } to { opacity: 1; transform: none; filter: none } }
+@keyframes bar-grow { from { transform: scaleY(0) } }
+@keyframes scan { 0%,100% { top: 12% } 50% { top: 80% } }
+@keyframes step-bar { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+@keyframes sync { from { left: -40px } to { left: 100% } }
+@keyframes grow-w { from { width: 0 } to { width: 100% } }
+@keyframes dash-flow { to { stroke-dashoffset: -24 } }
+@keyframes slide-l { from { opacity: 0; transform: translateX(-60px) } to { opacity: 1; transform: none } }
+@keyframes slide-r { from { opacity: 0; transform: translateX(60px) } to { opacity: 1; transform: none } }
+@keyframes vs-pop { from { opacity: 0; transform: scale(.3) rotate(-30deg) } to { opacity: 1; transform: none } }
+@keyframes stage-in { from { opacity: 0; transform: scale(.97); filter: blur(6px) } to { opacity: 1; transform: none; filter: none } }
+.animate-stage { animation: stage-in .6s cubic-bezier(.2,.7,.2,1) both; }
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-slow { animation: float 8s ease-in-out infinite 1s; }
+.animate-toast { animation: toast-in 5s ease-in-out infinite; }
+.animate-marquee { animation: marquee 34s linear infinite; }
+.animate-fade-up { animation: fade-up .5s cubic-bezier(.2,.7,.2,1) both; }
+.animate-phone-in { animation: phone-in 1.2s cubic-bezier(.16,.84,.3,1) both; }
+.animate-notif-in { animation: notif-in .55s cubic-bezier(.2,.9,.3,1.2) both; }
+.animate-pulse-glow { animation: pulse-glow 7s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 40s linear infinite; }
+.animate-bar { animation: bar-grow 1s cubic-bezier(.2,.7,.2,1) both; transform-origin: bottom; }
+.caret { animation: caret 1s steps(1) infinite; }
+.word { display: inline-block; animation: word-in .9s cubic-bezier(.2,.7,.2,1) both; }
+
+/* Scroll reveal: elements start hidden, <Reveal> adds .in when on screen. */
+.reveal { opacity: 0; transform: translateY(36px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
+.reveal.from-scale { transform: translateY(30px) scale(.95); }
+.reveal.from-left { transform: translateX(-40px); }
+.reveal.from-right { transform: translateX(40px); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Hover lift for tall feature cards: the phone slides up out of the card. */
+.lift-phone { transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.group:hover .lift-phone { transform: translateY(-18px); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; }
+}
