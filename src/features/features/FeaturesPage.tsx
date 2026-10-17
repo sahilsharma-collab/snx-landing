@@ -45,7 +45,7 @@ function Hero() {
           <p className="eyebrow text-cta">Features</p>
           <h1 className="h-display mt-5">An app that <span className="text-gradient">grows your store</span>, not just shows it.</h1>
           <p className="mt-6 max-w-xl text-lg text-mist sm:text-xl">We build a native app from your Shopify store, designed around your brand, with the automations, analytics and AI copilot that keep shoppers coming back.</p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex gap-2.5 sm:gap-3 [&>*]:min-w-0 [&>*]:flex-1 sm:[&>*]:flex-none">
             <DemoButton />
             <a href="#story" className="btn btn-ghost-dark">Explore features</a>
           </div>
@@ -223,9 +223,9 @@ function Story() {
                     Everything in {x.name} <Arrow className="size-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                   {/* phones and tablets: the demo sits right here */}
-                  <div className="mt-8 flex justify-center lg:hidden">
+                  <Reveal from="scale" className="mt-8 flex justify-center lg:hidden">
                     <Phone width={240}><FeatureScreen slug={x.slug} /></Phone>
-                  </div>
+                  </Reveal>
                 </li>
               )
             })}

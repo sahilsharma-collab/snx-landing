@@ -16,10 +16,10 @@ export function CtaBand() {
         {sent ? (
           <p className="mx-auto mt-9 max-w-md rounded-2xl bg-white/10 px-6 py-5 font-semibold text-white" role="status">Thanks! We’ll email you within one working day to pick a time.</p>
         ) : (
-          <form className="mx-auto mt-9 flex max-w-md flex-col gap-3 rounded-full bg-white/[0.06] p-1.5 ring-1 ring-white/15 backdrop-blur-xl focus-within:ring-cta sm:flex-row" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
+          <form className="mx-auto mt-9 flex max-w-md gap-2 rounded-full sm:gap-3 bg-white/[0.06] p-1.5 ring-1 ring-white/15 backdrop-blur-xl focus-within:ring-cta sm:flex-row" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
             <label className="sr-only" htmlFor="demo-url">Your store URL</label>
-            <input id="demo-url" required placeholder="yourstore.com" className="min-w-0 flex-1 rounded-full bg-transparent px-5 py-3 text-white placeholder:text-mist/70 focus:outline-none" />
-            <button className="btn btn-cta">Book a demo <Arrow className="size-4" /></button>
+            <input id="demo-url" required placeholder="yourstore.com" className="min-w-0 flex-1 rounded-full bg-transparent px-4 py-3 text-white sm:px-5 placeholder:text-mist/70 focus:outline-none" />
+            <button className="btn btn-cta shrink-0">Book a demo <Arrow className="size-4" /></button>
           </form>
         )}
         <TrustRow className="mt-7 justify-center" />

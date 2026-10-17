@@ -47,7 +47,7 @@ export function FeatureDetailPage() {
             </div>
             <h1 className="mt-6 font-display text-[2.5rem] leading-[1.03] font-extrabold tracking-[-0.03em] sm:text-6xl">{f.hero}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist sm:text-xl">{f.sub}</p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-9 flex gap-2.5 sm:gap-3 [&>*]:min-w-0 [&>*]:flex-1 sm:[&>*]:flex-none">
               <DemoButton />
               <Link to="/features" className="btn btn-ghost-dark">All features</Link>
             </div>

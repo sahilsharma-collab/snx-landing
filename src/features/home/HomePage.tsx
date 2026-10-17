@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useEffect, useRef, useState, type ReactNode, type KeyboardEvent } from 'react'
-import { brand, stats, plans, competitors, compareUrl, whyUs, calculator, ai } from '@/shared/config/site'
+import { brand, heroVariants, stats, plans, competitors, compareUrl, whyUs, calculator, ai } from '@/shared/config/site'
 import { Phone, MorphPhone, LockScreen, WebsiteScreen, BrandAppScreen, FashionStoreScreen, HealthScreen, BeautyScreen, FashionScreen, FoodScreen, type FinishKey } from '@/shared/phone'
 import { DemoButton, TrustRow, SectionHead, LogoStrip, Testimonial, CtaBand, TextLink, SaveBadge, StatusPill } from '@/shared/ui'
 import { Reveal, CountUp, Tilt, Words, spotlight, useTicker, useInView } from '@/shared/motion'
@@ -27,25 +27,31 @@ export function HomePage() {
 }
 
 function Hero() {
+  const { search } = useLocation()
+  const h = heroVariants[new URLSearchParams(search).get('v') ?? ''] ?? Object.values(heroVariants)[0]
+  const hlAt = 100 + h.before.split(' ').length * 70 // highlight lands right after the lead-in words
+  // a smaller phone on short laptop screens, so the whole hero fits in one screen
+  const phoneW = typeof window !== 'undefined' && window.innerHeight <= 760 ? 250 : 290
   return (
     <section className="relative overflow-hidden bg-ink text-cream">
       <div className="glow absolute inset-0" />
       <div className="grid-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,#000,transparent_75%)]" />
-      <div className="shell relative grid items-center gap-12 pt-14 pb-12 lg:grid-cols-[1.1fr_1fr] lg:pt-20 lg:pb-20">
+      {/* desktop: fills the screen below the sticky nav (h-16 + 1px border); the logo strip sits just below the fold */}
+      <div className="shell relative grid items-center gap-12 pt-14 pb-12 lg:min-h-[calc(100svh-65px)] lg:grid-cols-[1.1fr_1fr] lg:py-10 short:py-6">
         <div>
           <p className="animate-fade-up inline-flex items-center gap-2 rounded-full bg-white/5 px-3.5 py-1.5 text-xs font-medium text-mist ring-1 ring-white/10">
             <span className="relative flex size-2"><span className="absolute inset-0 animate-ping rounded-full bg-cta/70" /><span className="relative size-2 rounded-full bg-cta" /></span>
-            Shopify store → iOS + Android app
+            {h.pill}
           </p>
-          <h1 className="h-display mt-6">
-            <Words text="Your website, made" start={100} />
-            <span className="word" style={{ animationDelay: '380ms' }}><span className="text-gradient">better</span>{' '}</span>
-            <Words text="as an app." start={460} />
+          <h1 className="h-display mt-6 short:mt-4 short:text-[4.1rem]">
+            <Words text={h.before} start={100} />
+            <span className="word" style={{ animationDelay: `${hlAt}ms` }}><span className="text-gradient">{h.highlight}</span></span>{' '}
+            {h.after && <Words text={h.after} start={hlAt + 80} />}
           </h1>
           <p className="animate-fade-up mt-6 max-w-xl text-lg leading-relaxed text-mist sm:text-xl" style={{ animationDelay: '650ms' }}>
-            We don’t just copy your website into an app. We add the features your website can’t have, and build your brand while we do it. Designed around your brand, with AI built in and 0% commission.
+            {h.sub}
           </p>
-          <div className="animate-fade-up mt-9 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '800ms' }}>
+          <div className="animate-fade-up mt-9 flex gap-2.5 sm:gap-3 [&>*]:min-w-0 [&>*]:flex-1 sm:[&>*]:flex-none" style={{ animationDelay: '800ms' }}>
             <DemoButton />
             <Link to="/pricing" className="btn btn-ghost-dark">See pricing</Link>
           </div>
@@ -56,7 +62,7 @@ function Hero() {
         <div className="relative mx-auto flex w-full max-w-[460px] flex-col items-center">
           <div className="absolute top-10 left-1/2 size-[420px] -translate-x-1/2 rounded-full bg-[conic-gradient(from_90deg,#7B61FF,#4C8DFF,#C9F45B,#7B61FF)] opacity-25 blur-[90px]" />
           <div className="animate-phone-in relative" style={{ animationDelay: '200ms' }}>
-            <Tilt max={6}><MorphPhone width={290} /></Tilt>
+            <Tilt max={6}><MorphPhone width={phoneW} /></Tilt>
           </div>
           <FloatCard className="top-[16%] left-0 lg:-left-8" delay={1100}>
             <span className="grid size-8 place-items-center rounded-xl bg-gradient-to-br from-amber-300 to-orange-500 text-white"><Gift className="size-4" /></span>
@@ -81,8 +87,8 @@ interface FloatCardProps {
 
 function FloatCard({ children, delay = 0, className = '' }: FloatCardProps) {
   return (
-    <div className={`animate-fade-up absolute z-20 hidden sm:block ${className}`} style={{ animationDelay: `${delay}ms` }}>
-      <div className="animate-float-slow flex items-center gap-3 rounded-2xl bg-white/95 py-2.5 pr-4 pl-2.5 text-sm text-ink shadow-[0_24px_50px_-14px_rgba(0,0,0,0.6)]">{children}</div>
+    <div className={`animate-fade-up absolute z-20 ${className}`} style={{ animationDelay: `${delay}ms` }}>
+      <div className="animate-float-slow flex items-center gap-2 rounded-2xl bg-white/95 py-2 pr-3 pl-2 text-xs text-ink sm:gap-3 sm:py-2.5 sm:pr-4 sm:pl-2.5 sm:text-sm shadow-[0_24px_50px_-14px_rgba(0,0,0,0.6)]">{children}</div>
     </div>
   )
 }

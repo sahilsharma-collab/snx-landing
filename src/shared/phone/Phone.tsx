@@ -1,7 +1,7 @@
 // Phone frame + the app screens drawn inside it. Screens are plain markup
 // (no images) so they stay crisp at any resolution, animate, and are easy
 // to re-theme. The frame is modelled on a titanium iPhone 15 Pro: metal rim,
-// side buttons, Dynamic Island, glass glare and home indicator.
+// side buttons, punch-hole camera, glass glare and home indicator.
 import { useEffect, useRef, useState, type CSSProperties, type ComponentType, type ReactNode } from 'react'
 import { Bell, Cart, Heart, Star, Gift, Check, Clock, Sparkle, ShoppingBag, Truck, Lock, Menu, Flashlight, Camera, DragHandle, Mobile, Arrow } from '@/shared/icons'
 import { useTicker } from '@/shared/motion'
@@ -110,14 +110,12 @@ function PhoneFrame({ children, className = '', width = 272, finish = 'titanium'
       {/* black border + display */}
       <div className="absolute bg-black" style={{ inset: rim, borderRadius: R - rim, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06), inset 0 0 4px rgba(0,0,0,0.9)' }}>
         <div className="iphone-screen absolute overflow-hidden bg-white text-ink" style={{ inset: border, borderRadius: R - rim - border }}>
-          {/* Dynamic Island with its camera lens */}
-          <div className="absolute left-1/2 z-[70] -translate-x-1/2 rounded-full bg-black" style={{ top: sw * 0.03, width: sw * 0.335, height: sw * 0.095 }}>
-            <span className="absolute top-1/2 -translate-y-1/2 rounded-full" style={{
-              right: sw * 0.025, width: sw * 0.052, height: sw * 0.052,
-              background: 'radial-gradient(circle at 35% 35%, #4a5a8a 0%, #1a2238 40%, #050508 72%)',
-              boxShadow: 'inset 0 0 1px rgba(140,170,255,0.6)',
-            }} />
-          </div>
+          {/* punch-hole camera: a small centred circle, so it hides less of the screen than an island */}
+          <span className="absolute left-1/2 z-[70] -translate-x-1/2 rounded-full" style={{
+            top: sw * 0.032, width: sw * 0.06, height: sw * 0.06,
+            background: 'radial-gradient(circle at 35% 35%, #4a5a8a 0%, #1a2238 30%, #050508 60%)',
+            boxShadow: 'inset 0 0 1px rgba(140,170,255,0.6), 0 0 0 1px rgba(0,0,0,0.6)',
+          }} />
           {children}
           <div className={`absolute left-1/2 z-[70] -translate-x-1/2 rounded-full ${indicator === 'light' ? 'bg-white/90' : 'bg-black/85'}`}
             style={{ bottom: sw * 0.022, width: sw * 0.35, height: Math.max(3.5, sw * 0.013) }} />
@@ -149,7 +147,7 @@ const Battery = () => (
 
 function StatusBar({ light = false }: { light?: boolean }) {
   return (
-    <div className={`relative z-[65] flex h-11 items-center justify-between pr-6 pl-8 pt-0.5 text-[12px] font-semibold tracking-tight ${light ? 'text-white' : 'text-ink'}`}>
+    <div data-statusbar className={`relative z-[65] flex h-11 shrink-0 items-center justify-between pr-6 pl-8 pt-0.5 text-[12px] font-semibold tracking-tight ${light ? 'text-white' : 'text-ink'}`}>
       <span>9:41</span>
       <span className="flex items-center gap-[5px]"><Signal /><Wifi /><Battery /></span>
     </div>
@@ -560,7 +558,9 @@ export function MorphPhone({ width = 290, finish = 'titanium' }: { width?: numbe
 
   return (
     <Phone width={width} finish={finish}>
-      <div ref={box} className="absolute inset-0 cursor-ew-resize touch-none select-none" onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end}
+      {/* one status bar across both screens: each screen hides its own, so the split never shows two */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-[67]"><StatusBar /></div>
+      <div ref={box} className="absolute inset-0 cursor-ew-resize touch-none select-none [&_[data-statusbar]]:invisible" onPointerDown={start} onPointerMove={move} onPointerUp={end} onPointerCancel={end}
         role="slider" aria-label="Compare your website with the app" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(cut)}>
         <div className="absolute inset-0"><WebsiteScreen /></div>
         <div className="absolute inset-0" style={{ clipPath: `inset(0 0 0 ${cut}%)` }}><WatchAppScreen /></div>

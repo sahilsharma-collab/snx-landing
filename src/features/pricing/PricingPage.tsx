@@ -136,9 +136,9 @@ function PlanCard({ plan: p, price, yearlyTotal }: PlanCardProps) {
 
 function Matrix() {
   return (
-    <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:overflow-visible sm:px-0">
+    <div className="-mx-4 overflow-x-auto px-4 max-md:[contain:paint] sm:-mx-6 sm:px-6 md:mx-0 md:overflow-visible md:px-0">
       <table className="w-full min-w-[640px] border-separate border-spacing-0 rounded-[24px] bg-card text-left ring-1 ring-line">
-        <thead className="sticky top-16 z-10">
+        <thead className="z-10 md:sticky md:top-16">
           <tr>
             <th className="w-[40%] rounded-tl-[24px] bg-card px-6 py-5 text-sm font-semibold text-body">Feature</th>
             {plans.map((p) => (
