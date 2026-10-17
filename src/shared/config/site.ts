@@ -3,6 +3,7 @@
 // (see "Open questions" in the research brief).
 import type {
   Brand,
+  HeroVariant,
   Stat,
   Plan,
   MatrixGroup,
@@ -25,6 +26,27 @@ export const brand: Brand = {
   // Where every "Book a demo" button goes. Swap for a Calendly / HubSpot link.
   demoUrl: '#book-demo',
   salesEmail: 'sales@example.com', // PLACEHOLDER
+}
+
+// Home hero copy. Pick a variant with ?v=<key> in the URL (e.g. /?v=original)
+// to test them side by side; with no ?v= the first one is shown.
+// `highlight` is the part of the headline drawn in the shimmer gradient.
+// PLACEHOLDER: the ₹2–3 lakh uplift is an estimate, not yet backed by data.
+export const heroVariants: Record<string, HeroVariant> = {
+  lakh: {
+    pill: 'Shopify store → iOS + Android app',
+    before: 'Your website, made',
+    highlight: 'better',
+    after: 'as an app.',
+    sub: 'Already doing ₹15–20 lakh a month on Shopify? Your own app could add ₹2–3 lakh more, every month. We add the features your website can’t have, designed around your brand, with 0% commission.',
+  },
+  original: {
+    pill: 'Shopify store → iOS + Android app',
+    before: 'Your website, made',
+    highlight: 'better',
+    after: 'as an app.',
+    sub: 'We don’t just copy your website into an app. We add the features your website can’t have, and build your brand while we do it. Designed around your brand, with AI built in and 0% commission.',
+  },
 }
 
 // Hero stats — PLACEHOLDER numbers, to be supplied by the partner.

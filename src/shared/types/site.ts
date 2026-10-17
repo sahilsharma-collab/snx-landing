@@ -13,6 +13,15 @@ export interface Brand {
   salesEmail: string
 }
 
+export interface HeroVariant {
+  pill: string
+  before: string
+  /** Part of the headline drawn in the shimmer gradient. */
+  highlight: string
+  after?: string
+  sub: string
+}
+
 export interface Stat {
   value: string
   label: string

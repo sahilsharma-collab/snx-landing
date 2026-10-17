@@ -110,7 +110,7 @@ export function Tilt({ max = 10, className = '', children }: TiltProps) {
     el.style.removeProperty('--gy')
   }
   return (
-    <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className={className}
+    <div ref={ref} onMouseMove={onMove} onMouseLeave={reset} className={`tilt-auto ${className}`}
       style={{ transition: 'transform .5s cubic-bezier(.2,.7,.2,1)', transformStyle: 'preserve-3d', willChange: 'transform' }}>
       {children}
     </div>
@@ -126,7 +126,7 @@ export interface WordsProps {
 // Splits a string into words that blur-rise in one after another.
 export function Words({ text, start = 0, step = 70 }: WordsProps) {
   return text.split(' ').map((w, i) => (
-    <span key={i} className="word" style={{ animationDelay: `${start + i * step}ms` }}>{w}{' '}</span>
+    <span key={i} className="word" style={{ animationDelay: `${start + i * step}ms` }}>{w}{' '}</span>
   ))
 }
 

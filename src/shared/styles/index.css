@@ -25,6 +25,9 @@
   --color-save: #1F9D55;
 }
 
+/* short laptop screens (desktop width, under 760px tall): tighten the hero so it fits one screen */
+@custom-variant short (@media (min-width: 64rem) and (max-height: 760px));
+
 @layer base {
   html { scroll-behavior: smooth; background: var(--color-ink); }
   body {
@@ -40,7 +43,7 @@
   .h-display { @apply text-[2.7rem] leading-[1.02] font-extrabold tracking-[-0.03em] sm:text-6xl lg:text-[4.9rem]; }
   .h-section { @apply text-3xl leading-[1.06] font-bold tracking-[-0.025em] sm:text-5xl; }
 
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-semibold transition-all duration-300 whitespace-nowrap; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold sm:px-6 sm:py-3.5 sm:text-[15px] transition-all duration-300 whitespace-nowrap; }
   .btn-cta { @apply bg-cta text-ink hover:bg-cta-hover hover:-translate-y-0.5 shadow-[0_10px_34px_-8px_rgba(201,244,91,0.65)]; }
   .btn-ghost-dark { @apply text-white ring-1 ring-white/20 hover:ring-white/50 hover:bg-white/5; }
   .btn-ghost { @apply text-ink ring-1 ring-ink/15 hover:ring-ink/40 bg-white; }
@@ -116,6 +119,7 @@
 @keyframes slide-r { from { opacity: 0; transform: translateX(60px) } to { opacity: 1; transform: none } }
 @keyframes vs-pop { from { opacity: 0; transform: scale(.3) rotate(-30deg) } to { opacity: 1; transform: none } }
 @keyframes stage-in { from { opacity: 0; transform: scale(.97); filter: blur(6px) } to { opacity: 1; transform: none; filter: none } }
+@keyframes sway { 0%,100% { transform: perspective(1100px) rotateY(-6deg) rotateX(2deg) } 50% { transform: perspective(1100px) rotateY(6deg) rotateX(-2deg) } }
 .animate-stage { animation: stage-in .6s cubic-bezier(.2,.7,.2,1) both; }
 
 .animate-float { animation: float 6s ease-in-out infinite; }
@@ -128,6 +132,8 @@
 .animate-pulse-glow { animation: pulse-glow 7s ease-in-out infinite; }
 .animate-spin-slow { animation: spin-slow 40s linear infinite; }
 .animate-bar { animation: bar-grow 1s cubic-bezier(.2,.7,.2,1) both; transform-origin: bottom; }
+/* phones and tablets: no mouse to follow, so <Tilt> sways gently by itself */
+@media (hover: none) { .tilt-auto { animation: sway 7s ease-in-out infinite; } }
 .caret { animation: caret 1s steps(1) infinite; }
 .word { display: inline-block; animation: word-in .9s cubic-bezier(.2,.7,.2,1) both; }
 
