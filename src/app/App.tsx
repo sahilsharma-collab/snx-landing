@@ -18,11 +18,18 @@ function ScrollToTop() {
   return null
 }
 
+// Routes that open on a light (cream) hero — the nav shows its frosted pill from
+// the top here instead of the transparent-over-dark-hero state. Extend as needed
+// (e.g. '/privacy', '/terms').
+const LIGHT_HERO_ROUTES = ['/blog']
+
 export default function App() {
+  const { pathname } = useLocation()
+  const lightHero = LIGHT_HERO_ROUTES.some((p) => pathname === p || pathname.startsWith(`${p}/`))
   return (
     <>
       <ScrollToTop />
-      <Nav />
+      <Nav solid={lightHero} />
       <main>
         <Routes>
           <Route path="/pricing" element={<PricingPage />} />

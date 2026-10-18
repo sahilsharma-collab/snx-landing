@@ -174,7 +174,7 @@ export function RetentionTimeline({ link }: RetentionTimelineProps) {
       {/* the story */}
       <div ref={track} onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerLeave={up}
         onWheel={(e: WheelEvent<HTMLDivElement>) => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { pause(); cancelAnimationFrame(glide.current) } }} onTouchStart={() => { pause(); cancelAnimationFrame(glide.current) }}
-        className="mt-10 flex cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto pt-3 pb-4 select-none active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="mt-10 flex cursor-grab snap-x snap-mandatory gap-5 overflow-x-auto overflow-y-hidden overscroll-x-contain pt-3 pb-4 select-none active:cursor-grabbing [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         style={{ paddingLeft: EDGE, paddingRight: EDGE, scrollPaddingLeft: EDGE }}>
         {journey.map((j, i) => {
           const on = i === at

@@ -22,7 +22,7 @@ export function CtaBand() {
             <button className="btn btn-cta shrink-0">Book a demo <Arrow className="size-4" /></button>
           </form>
         )}
-        <TrustRow className="mt-7 justify-center" />
+        <TrustRow commission={false} className="mt-7 justify-center" />
       </Reveal>
       {/* three phones rising out of the bottom edge: only their top half shows.
           The box is wide enough that nothing is clipped at the sides. */}

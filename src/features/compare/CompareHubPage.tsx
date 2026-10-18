@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { brand, competitors, compareUrl } from '@/shared/config/site'
 import { CtaBand } from '@/shared/ui'
@@ -6,10 +6,11 @@ import { Arrow, Check, Shield, Scale } from '@/shared/icons'
 import { Logo } from '@/shared/layout'
 import { Reveal, CountUp } from '@/shared/motion'
 import { useLoop } from '@/shared/sections'
+import { useSeo } from '@/shared/seo'
 import { scoreFor } from '@/features/compare/scoring'
 
 export function CompareHubPage() {
-  useEffect(() => { document.title = `Compare | ${brand.name}` }, [])
+  useSeo({ title: 'Compare', description: `See how ${brand.name} compares to AppBrew, Shopney and other Shopify app builders — features and pricing, side by side.` })
   const keys = Object.keys(competitors)
   const [pick, setPick] = useState(keys[0])
   const c = competitors[pick]

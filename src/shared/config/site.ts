@@ -20,8 +20,8 @@ import type {
 } from '@/shared/types/site'
 
 export const brand: Brand = {
-  name: 'Nuvo', // PLACEHOLDER: product name not decided yet
-  slug: 'nuvo',
+  name: 'appitup', // official product name
+  slug: 'appitup',
   tagline: 'We don’t clone your website. We build your brand.',
   // Where every "Book a demo" button goes. Swap for a Calendly / HubSpot link.
   demoUrl: '#book-demo',

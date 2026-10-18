@@ -2,9 +2,9 @@
 // hero with the feature running in a phone → what it does (+ how, as steps)
 // → capabilities as numbered tiles → (automations: the journey) → what's
 // next on a timeline → up next.
-import { useEffect } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { brand, features } from '@/shared/config/site'
+import { features } from '@/shared/config/site'
+import { useSeo } from '@/shared/seo'
 import { DemoButton, SectionHead, StatusPill, CtaBand } from '@/shared/ui'
 import { iconFor, Arrow } from '@/shared/icons'
 import { Phone } from '@/shared/phone'
@@ -17,7 +17,7 @@ export function FeatureDetailPage() {
   const { slug } = useParams<{ slug: string }>()
   const i = features.findIndex((x) => x.slug === slug)
   const f = features[i]
-  useEffect(() => { if (f) document.title = `${f.name} | ${brand.name}` }, [f])
+  useSeo({ title: f?.name ?? 'Features', description: f?.sub ?? 'Features that turn your Shopify store into a branded iOS and Android app.' })
   if (!f) return <Navigate to="/features" replace />
 
   const Ic = iconFor(f.icon)

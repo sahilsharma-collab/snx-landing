@@ -8,10 +8,11 @@ import { Phone } from '@/shared/phone'
 import { photo } from '@/shared/config/photos'
 import { Reveal, Tilt } from '@/shared/motion'
 import { HowItWorks } from '@/shared/sections'
+import { useSeo } from '@/shared/seo'
 import type { FeatureCap } from '@/shared/types/site'
 
 export function FeaturesPage() {
-  useEffect(() => { document.title = `Features | ${brand.name}` }, [])
+  useSeo({ title: 'Features', description: `Everything your branded app does: push notifications, retention automations, an AI copilot, live analytics, and a design built around your brand — all synced to your Shopify store.` })
   return (
     <>
       <Hero />
@@ -40,10 +41,9 @@ function Hero() {
     <section className="relative overflow-hidden bg-ink text-white">
       <div className="glow absolute inset-0" />
       <div className="grid-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,#000,transparent)]" />
-      <div className="shell relative grid items-center gap-12 py-16 lg:grid-cols-[1fr_1.1fr] lg:py-20">
+      <div className="shell relative grid items-center gap-12 pt-24 pb-12 lg:min-h-svh lg:grid-cols-[1fr_1.1fr] lg:pt-24 lg:pb-10 short:py-6">
         <div className="animate-fade-up">
-          <p className="eyebrow text-cta">Features</p>
-          <h1 className="h-display mt-5">An app that <span className="text-gradient">grows your store</span>, not just shows it.</h1>
+          <h1 className="h-display">An app that <span className="text-gradient">grows your store</span>, not just shows it.</h1>
           <p className="mt-6 max-w-xl text-lg text-mist sm:text-xl">We build a native app from your Shopify store, designed around your brand, with the automations, analytics and AI copilot that keep shoppers coming back.</p>
           <div className="mt-9 flex gap-2.5 sm:gap-3 [&>*]:min-w-0 [&>*]:flex-1 sm:[&>*]:flex-none">
             <DemoButton />

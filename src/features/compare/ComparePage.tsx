@@ -1,12 +1,13 @@
 // One template for every /compare/<us>-vs-<competitor> page. Only two
 // columns render: us and the one competitor in the URL.
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { brand, ai, competitors, compareRows, compareColumns, plans } from '@/shared/config/site'
 import { DemoButton, SectionHead, CtaBand, LogoStrip, StatusPill } from '@/shared/ui'
 import { Logo } from '@/shared/layout'
 import { Check, Cross, Plug, Brush, Rocket, Sparkle } from '@/shared/icons'
 import { Reveal, CountUp } from '@/shared/motion'
+import { useSeo } from '@/shared/seo'
 import { scoreFor } from './scoring'
 import type { CompareCell, CompareGroup, Competitor } from '@/shared/types/site'
 
@@ -16,7 +17,7 @@ export function ComparePage() {
   const c = key ? competitors[key] : undefined
   const us = brand.name
   const [diffOnly, setDiffOnly] = useState(false)
-  useEffect(() => { if (c) document.title = `${us} vs ${c.name}` }, [c, us])
+  useSeo({ title: c ? `${us} vs ${c.name}` : 'Compare', brandSuffix: false, description: c ? `${us} vs ${c.name}, feature by feature — how they compare on price, native app features and commission for Shopify brands.` : 'Compare Shopify app builders side by side.' })
   if (!c) return <Navigate to="/compare" replace />
 
   const col = compareColumns.indexOf(key as string) + 2

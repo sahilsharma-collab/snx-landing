@@ -18,7 +18,7 @@ export function Footer() {
       <div className="shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
         <div>
           <Logo />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed">{brand.tagline} iOS and Android apps for Shopify stores, with 0% commission.</p>
+          <p className="mt-4 max-w-xs text-sm leading-relaxed">{brand.tagline} iOS and Android apps for Shopify stores.</p>
         </div>
         {cols.map(([title, items]) => (
           <div key={title}>

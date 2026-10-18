@@ -67,6 +67,25 @@ export const Phone = wrap(LPhone)
 export const TrendUp = wrap(TrendingUp)
 export const Book = wrap(BookOpen)
 export const Scale = wrap(LScale)
+
+// Custom, on-brand glyphs for the Resources menu (not stock lucide).
+// Blog: an article/journal page with a bold title + text lines and a corner fold.
+export const BlogGlyph: IconComponent = ({ className = 'size-5', strokeWidth = 1.7 }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+    <path d="M14 3.5H7A2.5 2.5 0 0 0 4.5 6v12A2.5 2.5 0 0 0 7 20.5h10A2.5 2.5 0 0 0 19.5 18V9z" />
+    <path d="M14 3.5V9h5.5" />
+    <path d="M8 13h8" />
+    <path d="M8 16.5h5.5" />
+  </svg>
+)
+// Compare: two panels side by side with a dashed "versus" divider.
+export const CompareGlyph: IconComponent = ({ className = 'size-5', strokeWidth = 1.7 }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+    <rect x="3.5" y="5" width="7" height="14" rx="2.2" />
+    <rect x="13.5" y="5" width="7" height="14" rx="2.2" />
+    <path d="M12 3.5v17" strokeDasharray="1.4 2.6" opacity="0.7" />
+  </svg>
+)
 export const Grid = wrap(LayoutGrid)
 export const When = wrap(CalendarClock)
 export const Target = wrap(LTarget)

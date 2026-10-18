@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { brand, blogTopics, upcomingPosts } from '@/shared/config/site'
 import { CtaBand } from '@/shared/ui'
 import { Check } from '@/shared/icons'
 import { Reveal } from '@/shared/motion'
-import { useLoop } from '@/shared/sections'
+import { useSeo } from '@/shared/seo'
 import { photo } from '@/shared/config/photos'
 
 // PLACEHOLDER: no articles yet. The planned guides show as "Coming soon".
@@ -11,7 +11,7 @@ import { photo } from '@/shared/config/photos'
 const topicColor: Record<string, [string, string]> = { Retention: ['#C9F45B', '#7BE0C3'], Push: ['#F59E0B', '#FB7185'], 'App design': ['#7B61FF', '#4C8DFF'], 'D2C India': ['#22C55E', '#C9F45B'], Analytics: ['#4C8DFF', '#7BE0C3'] }
 
 export function BlogPage() {
-  useEffect(() => { document.title = `Blog | ${brand.name}` }, [])
+  useSeo({ title: 'Blog', description: `Practical guides for Shopify brands growing with an app — retention, push notifications, app design and D2C growth, from the ${brand.name} team.` })
   const [topic, setTopic] = useState('All')
   const shown = upcomingPosts.filter((p) => topic === 'All' || p.topic === topic)
 
@@ -20,7 +20,7 @@ export function BlogPage() {
       <Hero />
 
       {/* upcoming guides */}
-      <section className="bg-paper py-16 sm:py-24">
+      <section className="bg-paper pt-12 pb-16 sm:pt-14 sm:pb-24">
         <div className="shell">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
@@ -58,23 +58,21 @@ export function BlogPage() {
   )
 }
 
-// Hero: the headline cycles through what the blog covers.
+// Hero: a light editorial masthead — eyebrow + title on the left, intro on the
+// right, over a faded dot grid with a soft brand glow, closed by a divider.
 function Hero() {
-  const words = ['retention', 'push that works', 'app design', 'Indian D2C', 'growth']
-  const i = useLoop(words.length, 2200)
   return (
-    <section className="relative overflow-hidden bg-ink text-white">
-      <div className="glow absolute inset-0" />
-      <div className="grid-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,#000,transparent)]" />
-      <div className="shell relative py-16 text-center lg:py-24">
-        <p className="eyebrow text-cta">The {brand.name} Journal</p>
-        <h1 className="h-display mx-auto mt-5 max-w-4xl">
-          Field notes on<br />
-          <span className="relative inline-grid h-[1.1em] overflow-hidden align-bottom">
-            <span key={i} className="text-gradient animate-[word-in_.7s_cubic-bezier(.2,.7,.2,1)_both]">{words[i]}.</span>
-          </span>
-        </h1>
-        <p className="mx-auto mt-6 max-w-xl text-lg text-mist">Practical guides for Shopify brands growing with an app. Our first guides are on the way.</p>
+    <section className="relative overflow-hidden bg-paper pt-28 pb-10 text-ink sm:pt-32">
+      <div className="pointer-events-none absolute inset-0" aria-hidden style={{ backgroundImage: 'radial-gradient(rgba(8,12,28,.12) 1px,transparent 1px)', backgroundSize: '22px 22px', WebkitMaskImage: 'linear-gradient(#000,transparent 70%)', maskImage: 'linear-gradient(#000,transparent 70%)' }} />
+      <div className="pointer-events-none absolute -top-[180px] -right-[120px] size-[520px] rounded-full" aria-hidden style={{ background: 'radial-gradient(circle,rgba(123,97,255,.18),transparent 65%)' }} />
+      <div className="shell relative">
+        <div className="grid items-end gap-10 border-b border-line pb-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+          <div>
+            <span className="eyebrow text-brand">The {brand.name} journal</span>
+            <h1 className="h-display mt-4">Field notes on <span className="bg-clip-text text-transparent" style={{ backgroundImage: 'linear-gradient(90deg,#7B61FF,#4C8DFF)' }}>growth.</span></h1>
+          </div>
+          <p className="text-lg leading-relaxed text-pretty text-body">Practical guides for Shopify brands growing with an app. Our first guides are on the way.</p>
+        </div>
       </div>
     </section>
   )

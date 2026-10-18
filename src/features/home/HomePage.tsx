@@ -7,9 +7,11 @@ import { Reveal, CountUp, Tilt, Words, spotlight, useTicker, useInView } from '@
 import { photo } from '@/shared/config/photos'
 import { HowItWorks } from '@/shared/sections'
 import { RetentionTimeline } from '@/shared/sections'
+import { useSeo } from '@/shared/seo'
 import { Gift, Percent, Check, Swap, Sparkle, Bell, Apple, Android, Star, ChevronLeft, ChevronRight, Dumbbell, Shirt, Basket, Palette, TrendUp, iconFor } from '@/shared/icons'
 
 export function HomePage() {
+  useSeo({ title: `${brand.name} — Turn your Shopify store into a branded app`, brandSuffix: false, description: 'Turn your Shopify store into branded iOS and Android apps that grow your brand — push, retention automations and an AI copilot. 0% commission, half the price of the market leader.' })
   return (
     <>
       <Hero />
@@ -36,14 +38,10 @@ function Hero() {
     <section className="relative overflow-hidden bg-ink text-cream">
       <div className="glow absolute inset-0" />
       <div className="grid-dots absolute inset-0 [mask-image:linear-gradient(to_bottom,#000,transparent_75%)]" />
-      {/* desktop: fills the screen below the sticky nav (h-16 + 1px border); the logo strip sits just below the fold */}
-      <div className="shell relative grid items-center gap-12 pt-14 pb-12 lg:min-h-[calc(100svh-65px)] lg:grid-cols-[1.1fr_1fr] lg:py-10 short:py-6">
+      {/* the fixed nav overlays this hero; extra top padding clears the ~64px bar */}
+      <div className="shell relative grid items-center gap-12 pt-24 pb-12 lg:min-h-svh lg:grid-cols-[1.1fr_1fr] lg:pt-24 lg:pb-10 short:py-6">
         <div>
-          <p className="animate-fade-up inline-flex items-center gap-2 rounded-full bg-white/5 px-3.5 py-1.5 text-xs font-medium text-mist ring-1 ring-white/10">
-            <span className="relative flex size-2"><span className="absolute inset-0 animate-ping rounded-full bg-cta/70" /><span className="relative size-2 rounded-full bg-cta" /></span>
-            {h.pill}
-          </p>
-          <h1 className="h-display mt-6 short:mt-4 short:text-[4.1rem]">
+          <h1 className="h-display short:text-[4.1rem]">
             <Words text={h.before} start={100} />
             <span className="word" style={{ animationDelay: `${hlAt}ms` }}><span className="text-gradient">{h.highlight}</span></span>{' '}
             {h.after && <Words text={h.after} start={hlAt + 80} />}
@@ -55,7 +53,7 @@ function Hero() {
             <DemoButton />
             <Link to="/pricing" className="btn btn-ghost-dark">See pricing</Link>
           </div>
-          <TrustRow className="animate-fade-up mt-7" style={{ animationDelay: '950ms' }} />
+          <TrustRow commission={false} className="animate-fade-up mt-7" style={{ animationDelay: '950ms' }} />
         </div>
 
         {/* one phone, two worlds: drag the handle to turn the website into the app */}

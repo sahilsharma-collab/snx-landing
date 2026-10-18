@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { brand, plans, planMatrix, yearlyDiscount, competitors, compareUrl } from '@/shared/config/site'
 import { DemoButton, SectionHead, Faq, CtaBand, Cell, SaveBadge, TextLink, TrustRow } from '@/shared/ui'
-import { Check, Percent } from '@/shared/icons'
+import { Check } from '@/shared/icons'
+import { useSeo } from '@/shared/seo'
 import type { Plan, MatrixGroup, MatrixCell } from '@/shared/types/site'
 
 const fmt = (n: number) => `$${Math.round(n).toLocaleString('en-US')}`
@@ -15,17 +16,17 @@ const faqs: [string, string][] = [
 ]
 
 export function PricingPage() {
+  useSeo({ title: 'Pricing', description: 'Simple, flat monthly pricing for your iOS and Android apps — 0% commission on every order, so you keep everything your customers spend. Half the price of the market leader.' })
   const [yearly, setYearly] = useState(true)
   const price = (m: number) => (yearly ? m * (1 - yearlyDiscount) : m)
   const ab = competitors.appbrew
 
   return (
     <>
-      <section className="relative overflow-hidden bg-ink pt-16 pb-40 text-center text-white sm:pt-20">
+      <section className="relative overflow-hidden bg-ink pt-28 pb-40 text-center text-white sm:pt-36">
         <div className="glow absolute inset-0" />
         <div className="shell relative">
-          <p className="eyebrow text-cta">Pricing</p>
-          <h1 className="h-display mx-auto mt-5 max-w-3xl">Simple pricing. <span className="text-gradient">0% commission.</span></h1>
+          <h1 className="h-display mx-auto max-w-3xl">Simple pricing. <span className="text-gradient">0% commission.</span></h1>
           <p className="mx-auto mt-6 max-w-xl text-lg text-mist">One flat price for your iOS and Android apps. Keep every rupee and dollar your customers spend.</p>
 
           <div className="mt-10 inline-flex items-center gap-1 rounded-full bg-white/5 p-1.5 ring-1 ring-white/10" role="radiogroup" aria-label="Billing period">
@@ -46,7 +47,7 @@ export function PricingPage() {
 
         <div className="shell mt-6">
           <div className="flex flex-col items-center justify-between gap-4 rounded-3xl bg-save px-7 py-6 text-white sm:flex-row">
-            <p className="flex items-center gap-3 font-display text-xl font-bold sm:text-2xl"><Percent className="size-7" /> 0% commission on your sales. On every plan.</p>
+            <p className="flex items-center gap-3 font-display text-xl font-bold sm:text-2xl">0% commission on your sales. On every plan.</p>
             <p className="text-sm text-white/85">No revenue share, no transaction fees, no surprises.</p>
           </div>
         </div>
@@ -117,7 +118,6 @@ function PlanCard({ plan: p, price, yearlyTotal }: PlanCardProps) {
       <p className={`mt-2 text-sm leading-relaxed ${hot ? 'text-mist' : 'text-body'}`}>{p.blurb}</p>
       <p className="mt-7 font-display text-5xl font-extrabold">{fmt(price)}<span className={`text-lg font-semibold ${hot ? 'text-mist' : 'text-body'}`}>/mo</span></p>
       <p className={`mt-1 h-5 text-sm ${hot ? 'text-mist' : 'text-body'}`}>{yearlyTotal ? `${fmt(yearlyTotal)} billed yearly · save ${fmt(price * 12 - yearlyTotal)}` : 'Billed monthly'}</p>
-      <p className={`mt-4 inline-flex items-center gap-1.5 self-start rounded-full px-3 py-1 text-xs font-bold ${hot ? 'bg-cta text-ink' : 'bg-save/10 text-save'}`}><Percent className="size-3.5" /> 0% commission</p>
       <ul className="mt-7 space-y-3 text-[15px]">
         {p.features.map((f) => (
           <li key={f} className="flex gap-3"><Check className={`mt-0.5 size-5 shrink-0 ${hot ? 'text-cta' : 'text-brand'}`} strokeWidth={2.5} />{f}</li>

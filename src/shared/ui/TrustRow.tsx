@@ -3,14 +3,15 @@ import { Percent, Apple, Android, Shopify } from '@/shared/icons'
 
 export type TrustRowProps = {
   dark?: boolean
+  commission?: boolean
   className?: string
 } & HTMLAttributes<HTMLUListElement>
 
 // Trust signals that sit right beside CTAs.
-export function TrustRow({ dark = true, className = '', ...p }: TrustRowProps) {
+export function TrustRow({ dark = true, commission = true, className = '', ...p }: TrustRowProps) {
   return (
     <ul className={`flex flex-wrap items-center gap-x-3.5 gap-y-2 text-[13px] sm:gap-x-5 sm:text-sm ${dark ? 'text-mist' : 'text-body'} ${className}`} {...p}>
-      <li className="flex items-center gap-1.5"><Percent className={`size-4 ${dark ? 'text-cta' : 'text-save'}`} /> 0% commission</li>
+      {commission && <li className="flex items-center gap-1.5"><Percent className={`size-4 ${dark ? 'text-cta' : 'text-save'}`} /> 0% commission</li>}
       <li className={`flex items-center gap-1.5 ${dark ? 'text-white' : 'text-ink'}`} aria-label="iOS and Android">
         <Apple className="size-[18px]" /><span className={`text-sm font-semibold ${dark ? 'text-mist' : 'text-body'}`} aria-hidden>+</span><Android className="size-[18px] text-[#3DDC84]" />
       </li>
